@@ -1,6 +1,6 @@
 # First perceptron implementation...
 
-import numpy as py
+import numpy as np
 
 class Perceptron(object):
     """ Perceptron Classifier
@@ -30,7 +30,7 @@ class Perceptron(object):
 
     def net_input(self, row):
         """Calculate net input"""
-        return np.dot(X, self.w_[1:]) + self.w_[0]
+        return np.dot(row, self.w_[1:]) + self.w_[0]
 
     def predict(self, X):
         """Return class label after unit step"""
@@ -54,7 +54,7 @@ class Perceptron(object):
         """
 
         rgen = np.random.RandomState(self.random_state)
-        self.w_ = rgen.normal(loc=0.0, scale=0.01, size=1, X.shape[1]) 
+        self.w_ = rgen.normal(loc=0.0, scale=0.01, size=1 + X.shape[1]) 
 
         self.errors_ = []
 
