@@ -2,6 +2,7 @@
 
 import numpy as np
 
+
 class Perceptron(object):
     """ Perceptron Classifier
 
@@ -23,7 +24,8 @@ class Perceptron(object):
 
     """
 
-    def __init__(self, learning_rate=0.01, n_length_iterator=50, random_state=1):
+    def __init__(self, learning_rate=0.01, n_length_iterator=50,
+                 random_state=1):
         self.learning_rate = learning_rate
         self.n_length_iterator = n_length_iterator
         self.random_state = random_state
@@ -34,7 +36,7 @@ class Perceptron(object):
 
     def predict(self, X):
         """Return class label after unit step"""
-        return np.where(self.net_input(X) >- 0.0, 1, -1)
+        return np.where(self.net_input(X) >= 0.0, 1, -1)
     
     def fit(self, X, y):
         """ Fit training data.
@@ -65,5 +67,7 @@ class Perceptron(object):
                 self.w_[1:] += update * xi
                 self.w_[0] += update
                 errors += int(update != 0.0)
-            self.errors_.append(errors) # Track the incorrect decisions for each iteration over the dataset...
+            # Track the incorrect decisions for each 
+            # iteration over the dataset...
+            self.errors_.append(errors)  
         return self

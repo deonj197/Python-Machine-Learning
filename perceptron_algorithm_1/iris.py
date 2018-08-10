@@ -2,6 +2,9 @@ import pandas as pd
 import matplotlib.pyplot as plot
 import numpy as np
 
+from perceptron1 import Perceptron
+
+
 def main():
     # Load in the iris dataset. Ths creates a DataForm object...
     iris_data_form = pd.read_csv('https://archive.ics.uci.edu/ml/'
@@ -13,7 +16,7 @@ def main():
     """
     Extract the class labels from the first 100 samples.
     These will be our prediction targets for each sample.
-    Once we have the class labels we convert them to 
+    Once we have the class labels we convert them to
     a binary representation using the following convention:
 
     -1 = setosa
@@ -40,6 +43,20 @@ def main():
     plot.ylabel('petal length [cm] ')
     plot.legend(loc='upper left')
     plot.show()
+
+    """
+    Here is where we train our Perceptron (Linear Classification Model)
+    """
+    perceptron = Perceptron(learning_rate=0.1, n_length_iterator=10)
+    perceptron.fit(predictor_features, target_values)
+
+    # Below we create a graph showing the misclassification for each epoch
+    plot.plot(range(1, len(perceptron.errors_) + 1),
+              perceptron.errors_, marker='o')
+    plot.xlabel('Epochs')
+    plot.ylabel('Number of Updates')
+    plot.show()
+
 
 if __name__ == "__main__":
     main()
