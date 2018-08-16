@@ -1,8 +1,37 @@
 import pandas as pd
 import matplotlib.pyplot as plot
+from matplotlib.colors import ListedColormap
 import numpy as np
 
 from perceptron1 import Perceptron
+
+
+def plot_decision_regions(X, y, classifier, resolution=0.02):
+    # setup marker and color generators
+    markers = ('s', 'x', 'o', '^', 'v')
+    colors = ('red', 'blue', 'green', 'gray', 'cyan')
+    cmap = ListedColormap(colors[:len(np.unique(y))])
+
+    # plot the decision surface
+    x1_min, x1_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+    x2_min, x2_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+    xx1, xx2 = np.meshgrid(np.arange(x1_min, x1_max, resolution),
+                           np.arange(x2_min, x2_max, resolution))
+    Z = classifier.predict(np.array([xx1.ravel(), xx2.ravel()]).T)
+    Z = Z.reshape(xx1.shape)
+    plot.contourf(xx1, xx2, Z, alpha=0.3, cmap=cmap)
+    plot.xlim(xx1.min(), xx1.max())
+    plot.ylim(xx2.min(), xx2.max())
+
+    # plot class samples
+    for index, cl in enumerate(np.unique(y)):
+        plot.scatter(x=X[y == cl, 0],
+                     y=X[y == cl, 1],
+                     alpha=0.8,
+                     c=colors[index],
+                     marker=markers[index],
+                     label=cl,
+                     edgecolor='black')
 
 
 def main():
@@ -55,6 +84,13 @@ def main():
               perceptron.errors_, marker='o')
     plot.xlabel('Epochs')
     plot.ylabel('Number of Updates')
+    plot.show()
+
+    # Run the trained model and plot a contour graph with the results
+    plot_decision_regions(predictor_features, target_values, perceptron)
+    plot.xlabel('sepal length [cm] ')
+    plot.ylabel('petal length [cm] ')
+    plot.legend(loc='upper left')
     plot.show()
 
 
