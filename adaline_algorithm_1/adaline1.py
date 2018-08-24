@@ -50,7 +50,11 @@ class AdalineGD(object):
         # TODO perform fitting of data here...
 
     def net_input(self, X):
-        """Calc net input"""
+        """Calc net input
+        Params
+        ------------
+        X : 1d-array, a single sample with n feeatures.
+        """
         return np.dot(X, self.weights_[1:]) + self.weights_[0]
 
     def activation(self, Z):
@@ -58,7 +62,11 @@ class AdalineGD(object):
         return Z
 
     def predict(self, X):
-        """Return class label after unit step"""
+        """Return class label after unit step
+        Params
+        ------------
+        X : 1d-array, a single sample with n feeatures.
+        """
 
         # consider np.where()the threshold function...
         return np.where(self.activation(self.net_input(X)) >= 0.0, 1, -1)
