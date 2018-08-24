@@ -37,7 +37,7 @@ class Perceptron(object):
     def predict(self, X):
         """Return class label after unit step"""
         return np.where(self.net_input(X) >= 0.0, 1, -1)
-    
+
     def fit(self, X, y):
         """ Fit training data.
 
@@ -48,15 +48,15 @@ class Perceptron(object):
             n_features is the number of features.
         y : array-like, shape = [n_samples]
             Target values.
-        
+
         returns
         ------
         self : object
-        
+
         """
 
         rgen = np.random.RandomState(self.random_state)
-        self.w_ = rgen.normal(loc=0.0, scale=0.01, size=1 + X.shape[1]) 
+        self.w_ = rgen.normal(loc=0.0, scale=0.01, size=1 + X.shape[1])
 
         self.errors_ = []
 
@@ -67,7 +67,7 @@ class Perceptron(object):
                 self.w_[1:] += update * xi
                 self.w_[0] += update
                 errors += int(update != 0.0)
-            # Track the incorrect decisions for each 
+            # Track the incorrect decisions for each
             # iteration over the dataset...
             self.errors_.append(errors)  
         return self
